@@ -2,110 +2,125 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --primary: #4F46E5;
-  --primary-hover: #4338CA;
-  --background: #F9FAFB;
-  --card-background: #FFFFFF;
-  --text-primary: #111827;
-  --text-secondary: #4B5563;
-  --border: #E5E7EB;
-  --accent: #818CF8;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --primary: #4F46E5;
+    --primary-hover: #4338CA;
+    --background: #F9FAFB;
+    --card-background: #FFFFFF;
+    --text-primary: #111827;
+    --text-secondary: #4B5563;
+    --border: #E5E7EB;
+    --accent: #818CF8;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background: #0a0a0a;
+      --foreground: #ededed;
+      --card-background: #1a1a1a;
+      --text-primary: #ededed;
+      --text-secondary: #a3a3a3;
+      --border: #2e2e2e;
+    }
+  }
+
+  body {
+    color: var(--text-primary);
+    background: var(--background);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--text-primary);
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  p {
+    color: var(--text-secondary);
+    line-height: 1.6;
   }
 }
 
-body {
-  color: var(--text-primary);
-  background: var(--background);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+@layer components {
+  .container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .card {
+    background: var(--card-background);
+    border: 1px solid var(--border);
+    @apply rounded-xl transition-all duration-200;
+  }
+
+  .card:hover {
+    transform: translateY(-2px);
+    @apply shadow-lg;
+  }
+
+  .btn-primary {
+    background: var(--primary);
+    @apply text-white px-4 py-2 transition-colors duration-200;
+  }
+
+  .btn-primary:hover {
+    background: var(--primary-hover);
+  }
+
+  .input {
+    border: 1px solid var(--border);
+    background: var(--card-background);
+    color: var(--text-primary);
+    @apply w-full px-4 py-2 transition-all duration-200;
+  }
+
+  .input:focus {
+    border-color: var(--primary);
+    @apply outline-none ring-2 ring-primary/20;
+  }
+
+  .badge {
+    background: var(--background);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    @apply px-3 py-1 rounded-full text-sm;
+  }
+
+  .badge-primary {
+    background: var(--primary);
+    @apply text-white border-0;
+  }
+
+  .nav-link {
+    color: var(--text-secondary);
+    @apply transition-colors duration-200;
+  }
+
+  .nav-link:hover {
+    color: var(--primary);
+  }
 }
 
-/* Card Styles */
-.card {
-  background: var(--card-background);
-  border: 1px solid var(--border);
-  border-radius: 1rem;
-  transition: all 0.2s ease-in-out;
-}
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-out;
+  }
 
-.card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
-}
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 
-/* Button Styles */
-.btn-primary {
-  background: var(--primary);
-  color: white;
-  transition: all 0.2s ease;
-}
-
-.btn-primary:hover {
-  background: var(--primary-hover);
-}
-
-/* Input Styles */
-.input {
-  border: 1px solid var(--border);
-  border-radius: 0.5rem;
-  padding: 0.5rem 1rem;
-  transition: all 0.2s ease;
-}
-
-.input:focus {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.1);
-  outline: none;
-}
-
-/* Badge Styles */
-.badge {
-  background: var(--background);
-  border: 1px solid var(--border);
-  color: var(--text-secondary);
-  padding: 0.25rem 0.75rem;
-  border-radius: 9999px;
-  font-size: 0.75rem;
-}
-
-.badge-primary {
-  background: var(--primary);
-  color: white;
-  border: none;
-}
-
-/* Loading Spinner */
-.loading {
-  border-color: var(--primary);
-  border-right-color: transparent;
-}
-
-/* Typography */
-h1, h2, h3, h4, h5, h6 {
-  color: var(--text-primary);
-  font-weight: 600;
-  line-height: 1.2;
-}
-
-p {
-  color: var(--text-secondary);
-  line-height: 1.6;
-}
-
-/* Navigation */
-.nav-link {
-  color: var(--text-secondary);
-  transition: color 0.2s ease;
-}
-
-.nav-link:hover {
-  color: var(--primary);
+  .grid-container {
+    @apply grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4;
+  }
 }
 
 /* Custom Scrollbar */
@@ -124,46 +139,4 @@ p {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--text-secondary);
-}
-
-/* Animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fade-in {
-  animation: fadeIn 0.3s ease-out;
-}
-
-/* Grid Layout */
-.grid-container {
-  display: grid;
-  gap: 1.5rem;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-}
-
-/* Container */
-.container {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 1rem;
-}
-
-@media (min-width: 640px) {
-  .container {
-    padding: 0 2rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .container {
-    padding: 0 4rem;
-  }
 }
